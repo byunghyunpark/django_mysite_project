@@ -11,18 +11,21 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import json
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Directories
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
-# static files
+# 설정파일 폴더
+CONF_DIR = os.path.join(BASE_DIR, '.conf')
+config = json.loads(open(os.path.join(CONF_DIR, 'settings_debug.json')).read())
+
+# Static files
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
-
-AUTH_USER_MODEL = 'member.MyUser'
 
 # Auth
 AUTH_USER_MODEL = 'member.MyUser'
