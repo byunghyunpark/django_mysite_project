@@ -1,6 +1,9 @@
 *.sqlite3
 .idea/
 
+# Config folders
+django_app/.conf
+
 led / optimized / DLL files
 __pycache__/
 *.py[cod]
