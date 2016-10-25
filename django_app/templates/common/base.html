@@ -36,6 +36,8 @@
                   <li><a href="{% url 'blog:post_list' %}">Blog</a></li>
                   <li><a href="{% url 'video:bookmark_list' %}">Video</a></li>
                   <li><a href="{% url 'sns:index' %}">SNS</a></li>
+                  <li><a href="{% url 'photo:album_list' %}">Photo</a></li>
+
               {% else %}
                 <li><a href="{% url 'member:login' %}?next={{ request.path }}">login</a></li>
                 <li><a href="{% url 'member:signup2' %}?next={{ request.path }}">signup</a></li>

@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^member/', include('member.urls', namespace='member')),
     url(r'^video/', include('video.urls', namespace='video')),
     url(r'^sns/', include('sns.urls', namespace='sns')),
+    url(r'^photo/', include('photo.urls', namespace='photo')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

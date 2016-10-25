@@ -1,0 +1,15 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+
+<div class="container">
+<h4>Album list</h4>
+    <ul>
+        {% for album in albums %}
+        <li>
+            <a href="#">{{ album.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
