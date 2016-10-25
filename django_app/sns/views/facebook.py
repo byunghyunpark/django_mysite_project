@@ -1,12 +1,12 @@
+import json
 from collections import Counter
 
-from django.contrib import messages
 import requests
-from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from member.apis import facebook
+from django.shortcuts import render
 from django.urls import reverse
-import json
+
+from apis import facebook
 
 __all__ = [
     'friends_ranking',

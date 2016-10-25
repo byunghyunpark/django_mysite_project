@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.contrib.auth import authenticate as auth_authenticate, login as auth_login, logout as auth_logout
 from django.contrib import messages
-# facebook을 module화해서 import 하자
-from member.apis import facebook
+from django.contrib.auth import authenticate as auth_authenticate, login as auth_login
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+
+from apis import facebook
 
 
 def login(request):
