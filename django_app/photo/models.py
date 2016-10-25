@@ -6,8 +6,8 @@ class Album(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
     description = models.CharField(max_length=100, blank=True)
 
-    def __str__(self):
-        self.title
+    # def __str__(self):
+    #     self.title
 
 class Photo(models.Model):
     Album = models.ForeignKey(Album)
@@ -18,8 +18,8 @@ class Photo(models.Model):
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, through='PhotoLike', related_name='photo_set_like_users')
     dislike_users = models.ManyToManyField(settings.AUTH_USER_MODEL, through='PhotoDislike', related_name='photo_set_dislike_users')
 
-    def __str__(self):
-        self.title
+    # def __str__(self):
+    #     self.title
 
 
 class PhotoLike(models.Model):
