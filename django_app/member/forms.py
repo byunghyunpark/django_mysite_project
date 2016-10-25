@@ -30,10 +30,12 @@ class SignupModelForm(forms.ModelForm):
             'password2',
             'last_name',
             'first_name',
+            'phone_number',
             'nickname',
         )
         widgets = {
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'nickname': forms.TextInput(attrs={'class': 'form-control'}),

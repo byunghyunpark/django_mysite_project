@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db.models.signals import post_save
 
 from apis.mail import send_mail
+from apis.sms import send_sms
 
 
 class Post(models.Model):
@@ -39,7 +40,7 @@ class Comment(models.Model):
     #     send_mail(title, content, recipient_list)
 
 
-def send_comment_mail(sender, instance, **kwargs):
+def send_comment_reaction(sender, instance, **kwargs):
     """
     save 오버라이드 안하고 signal 사용
     :param sender:
@@ -54,8 +55,9 @@ def send_comment_mail(sender, instance, **kwargs):
         instance.content
     )
     send_mail(title, content)
+    send_sms('test', '01090818735')
 
-post_save.connect(send_comment_mail, sender=Comment)
+post_save.connect(send_comment_reaction, sender=Comment)
 
 
 

@@ -10,6 +10,7 @@ class MyUserManager(BaseUserManager):
             last_name,
             first_name,
             nickname,
+            phone_number,
             password=None
             ):
         user = self.model(
@@ -17,6 +18,7 @@ class MyUserManager(BaseUserManager):
             last_name=last_name,
             first_name=first_name,
             nickname=nickname,
+            phone_number=phone_number,
         )
         # 암호화
         user.set_password(password)
@@ -29,6 +31,7 @@ class MyUserManager(BaseUserManager):
             last_name,
             first_name,
             nickname,
+            phone_number,
             password=None
             ):
         user = self.model(
@@ -36,6 +39,7 @@ class MyUserManager(BaseUserManager):
             last_name=last_name,
             first_name=first_name,
             nickname=nickname,
+            phone_number=phone_number,
         )
         # 암호화
         user.is_staff = True
@@ -64,6 +68,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     nickname = models.CharField(max_length=30)
     date_joined = models.DateTimeField(auto_now_add=True)
     is_staff = models.BooleanField(default=False)
+    phone_number = models.CharField(max_length=30)
 
     # facebook user 전용 정보 추가
     is_facebook_user = models.BooleanField(default=False)
@@ -72,7 +77,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     # shell에 나오는 슈퍼유저 인증정보
-    REQUIRED_FIELDS = ('last_name', 'first_name', 'nickname', )
+    REQUIRED_FIELDS = ('last_name', 'first_name', 'nickname', 'phone_number')
 
     objects = MyUserManager()
 
@@ -81,3 +86,9 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         return self.first_name
+
+    # 폰 번호 '-' 문자 삭제
+    def save(self, *args, **kwargs):
+        if '-' in self.phone_number:
+            self.phone_number = self.phone_number.replace('-', '')
+        super().save(*args, **kwargs)
