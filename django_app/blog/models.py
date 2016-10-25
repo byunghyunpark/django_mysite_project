@@ -55,7 +55,8 @@ def send_comment_reaction(sender, instance, **kwargs):
         instance.content
     )
     send_mail(title, content)
-    send_sms('test', '01090818735')
+    receiver_number = instance.post.author.phone_number
+    send_sms(title, receiver_number)
 
 post_save.connect(send_comment_reaction, sender=Comment)
 
