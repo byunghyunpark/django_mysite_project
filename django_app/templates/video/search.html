@@ -1,0 +1,71 @@
+{% extends 'common/base.html' %}
+{% load app_filters %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="container search-container">
+  <form action="" class="">
+    <div class="col-sm-10">
+      <input type="text" name="keyword" class="form-control" placeholder="{{ keyword }}">
+    </div>
+    <button type="submit" name="button" class="btn btn-primary col-sm-2">검색</button>
+  </form>
+</div>
+
+<div class="container">
+  <ul>
+    {% for item in response.items %}
+    <li class="video-list">
+      <!-- <iframe id="encoder_iframe" height="345" width="560" src="https://www.youtube.com/embed/{{ item.id.videoId }}"></iframe> -->
+      <img src="{{ item.snippet.thumbnails.medium.url }}" alt="">
+      <p>제목: {{ item.snippet.title }}</p>
+      <p>{{ item.snippet.description|truncatewords:10 }}</p>
+      <p>게시일: {{ item.snippet.publishedAt|string_to_date|date:"Y.m.d h:i" }}</p>
+      {% if item.is_exist %}
+			<button>Already added</button>
+			{% else %}
+        <form class="" action="{% url 'video:add_bookmark' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="kind" value="{{ item.kind }}">
+          <input type="hidden" name="youtube_id" value="{{ item.id }}">
+          <input type="hidden" name="title" value="{{ item.snippet.title }}">
+          <input type="hidden" name="description" value="{{ item.snippet.description|truncatewords:30 }}">
+          <input type="hidden" name="published_date" value="{{ item.snippet.publishedAt }}">
+          <input type="hidden" name="thumbnail_url" value="{{ item.snippet.thumbnails.medium.url }}">
+          <input type="hidden" name="path" value="{{ request.full_path }}">
+          <div>
+            {% for tag in item.snippet.tags|slice:":5" %}
+              <span class="label label-default">{{ tag }}</span>
+            {% endfor %}
+          </div>
+          <p>조회수: {{ item.statistics.viewCount }}</p>
+          <p>좋아요: {{ item.statistics.likeCount }}</p>
+          <p>싫어요: {{ item.statistics.dislikeCount }}</p>
+          <p>댓글수: {{ item.statistics.commentCount }}</p>
+          <button type="submit" name="button">+ bookmark</button>
+        </form>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+
+
+</div>
+
+<div class="container">
+  {% if response.prevPageToken %}
+    <button type="button" name="button" onclick="location.href='{% url 'video:search' %}?keyword={{ keyword }}&page_token={{ response.prevPageToken }}'">이전 페이지로</button>
+  {% endif %}
+
+  {% if response.prevPageToken %}
+    <button type="button" name="button" onclick="location.href='{% url 'video:search' %}?keyword={{ keyword }}'">첫 페이지로</button>
+  {% endif %}
+
+  {% if response.nextPageToken %}
+    <button type="button" name="button" onclick="location.href='{% url 'video:search' %}?keyword={{ keyword }}&page_token={{ response.nextPageToken }}'">다음 페이지로</button>
+  {% endif %}
+</div>
+
+
+{% endblock %}

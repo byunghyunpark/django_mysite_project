@@ -1,0 +1,72 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'css/common.css' %}">
+  <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+  <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+  <title>Byunghyun's blog</title>
+</head>
+<body>
+
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button
+          class="navbar-toggle collapsed"
+          data-toggle="collapse"
+          data-target="#main-navbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="{% url 'blog:post_list' %}" class="navbar-brand">byunghyun's blog</a>
+      </div>
+      <div class="collapse navbar-collapse" id="main-navbar">
+          <ul class="nav navbar-nav navbar-right">
+              {% if user.is_authenticated %}
+                  <li><a href="#">{{ user.email }}</a></li>
+                  <li><a href="{% url 'blog:post_new' %}"><span class="gloyphicon glyphicon-plus"></span>blog</a></li>
+                  <li><a href="{% url 'member:logout' %}">logout</a></li>
+                  <li><a href="{% url 'blog:post_list' %}">Blog</a></li>
+                  <li><a href="{% url 'video:bookmark_list' %}">Video</a></li>
+                  <li><a href="{% url 'sns:index' %}">SNS</a></li>
+              {% else %}
+                <li><a href="{% url 'member:login' %}?next={{ request.path }}">login</a></li>
+                <li><a href="{% url 'member:signup2' %}?next={{ request.path }}">signup</a></li>
+              {% endif %}
+          </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="content container">
+    <div class="row">
+      {% if messages %}
+      <div>
+        {% for message in messages %}
+        <div class="alert
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}alert-info
+          {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success
+          {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}alert-warning
+          {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger
+          {% endif %}" role="alert">
+          <span>{{ message }}</span>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="col-md-10 col-sm-10">
+          {% block content %}
+          {% endblock %}
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

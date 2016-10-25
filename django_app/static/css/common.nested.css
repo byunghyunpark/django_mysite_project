@@ -1,0 +1,17 @@
+html, body {
+  font-size: 12px;
+  color: #666; }
+
+h3 {
+  font-size: 30px;
+  margin-bottom: 20px;
+  color: #666; }
+
+div .bookmark-content {
+  border-bottom: 1px solid gray;
+  margin-bottom: 30px; }
+
+li {
+  list-style: none; }
+
+/*# sourceMappingURL=common.nested.css.map */

@@ -1,0 +1,22 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<div class="container">
+  <a href="{% url 'video:search' %}" class="btn btn-primary">Search videos</a>
+</div>
+<div class="container title">
+  <h1>My Video List</h1>
+</div>
+{% for video in videos %}
+<div class="container bookmark-content col-md-12">
+  <a href="{% url 'video:bookmark_detail' pk=video.pk %}"><img src="{{ video.thumbnail_url }}" alt=""></a>
+  <p>Kind: {{ video.kind }}</p>
+  <p>VideoId: {{ video.youtube_id }}</p>
+  <p>Title: {{ video.title }}</p>
+  <p>Description: {{ video.description|truncatewords:30 }}</p>
+  <p>publishedAt: {{ video.published_date }}</p>
+  <p>addDate: {{ video.add_date }}</p>
+  <a href="{% url 'video:bookmark_delete' pk=video.pk %}" type="button" class="btn btn-default">Delete</a>
+</div>
+{% endfor %}
+{% endblock %}

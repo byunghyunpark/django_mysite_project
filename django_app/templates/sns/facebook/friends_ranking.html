@@ -1,0 +1,23 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<form action="" id="sns-facebook-friends-ranking" method="post">
+  {% csrf_token %}
+  <input type="hidden" name="access_token" value="{{ access_token }}">
+  <input type="hidden" name="facebook_user_id" value="{{ facebook_user_id }}">
+  <h3>Facebook friends ranking</h3>
+  <ul class="list-unstyled list-ranking">
+    {% for item in dict_ids_info_list %}
+    <li>
+      <div class="">
+        <img src="{{ item.info.picture.data.url }}" alt="" class="">
+        <p class="item-title">{{ forloop.counter }}위 {{ item.info.name }}</p>
+        <p class="item-description">내 타임라인에 작성한 댓글 수 : <strong>{{ item.number }}</strong></p>
+      </div>
+    </li>
+    <input name="item" type="hidden" class="item" value="{{ item }}">
+    {% endfor %}
+  </ul>
+  <button class="btn btn-primary">전송</button>
+</form>
+{% endblock %}

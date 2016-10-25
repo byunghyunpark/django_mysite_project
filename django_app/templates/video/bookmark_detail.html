@@ -1,0 +1,10 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+
+<div><p>youtube_id: {{ video.youtube_id }}</p></div>
+
+<iframe
+  width="560" height="315" src="https://www.youtube.com/embed/{{ video.youtube_id }}" frameborder="0" allowfullscreen></iframe>
+
+{% endblock %}
