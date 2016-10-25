@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
-from datetime import datetime
+from django.db.models.signals import post_save
 
 from apis.mail import send_mail
 
@@ -39,14 +39,31 @@ class Comment(models.Model):
     #     send_mail(title, content, recipient_list)
 
 
-    def save(self, *args, **kwargs):
-        super(Comment, self).save(*args, **kwargs)
+def send_comment_mail(sender, instance, **kwargs):
+    """
+    save 오버라이드 안하고 signal 사용
+    :param sender:
+    :param instance:
+    :param kwargs:
+    :return:
+    """
+    title = '{} 글에 댓글이 달렸습니다'.format(instance.post.title)
+    content = '{} 에 {} 내용이 달렷네요'.format(
+        # datetime.strftime(format) : 입력된 포맷 형식에 맞추어 datetime 객체를 문자열로 반환
+        instance.created_date.strftime('%Y. %m. %d %H:%M'),
+        instance.content
+    )
+    send_mail(title, content)
+
+post_save.connect(send_comment_mail, sender=Comment)
 
 
-# https: // docs.djangoproject.com / en / 1.10 / topics / signals /
 
+"""
+
+# instance만 받아서 실행한다. save 오버라이드보다 깔끔하다
 from django.dispatch import receiver
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save
 
 @receiver(post_save, sender=Comment)
 def send_comment_mail(sender, instance, **kwargs):
@@ -57,3 +74,5 @@ def send_comment_mail(sender, instance, **kwargs):
         instance.content
     )
     send_mail(title, content)
+
+"""
