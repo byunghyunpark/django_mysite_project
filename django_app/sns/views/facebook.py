@@ -80,7 +80,7 @@ def friends_ranking(request):
 
             uri_request_ids_info = 'https://graph.facebook.com/v2.8/{user_id}/' \
                               '?ids={ids}&' \
-                              'fields=cover,mail,picture,name&' \
+                              'fields=cover,email,picture,name&' \
                               'access_token={access_token}'.format(
                 user_id=user_id,
                 ids=str_set_most_id_list,
@@ -89,7 +89,7 @@ def friends_ranking(request):
 
             r = requests.get(uri_request_ids_info)
             dict_ids_info = r.json()
-            # print(json.dumps(dict_ids_info, indent=2))
+            print(json.dumps(dict_ids_info, indent=2))
 
             dict_ids_info_list = []
             for item in most_id_list:
@@ -110,7 +110,7 @@ def friends_ranking(request):
         # string 을 list로 변환
         for str_item in str_item_list:
             item = ast.literal_eval(str_item)
-            print(item)
+            # print(item)
 
 
 
