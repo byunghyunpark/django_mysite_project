@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 import json
+DEBUG = True
 
 # Directories
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,6 +24,7 @@ CONF_DIR = os.path.join(BASE_DIR, '.conf')
 config = json.loads(open(os.path.join(CONF_DIR, 'settings_debug.json')).read())
 
 # Static files
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
@@ -35,18 +37,18 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # Email
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = '587'
-EMAIL_HOST_USER = 'fastcampus.2016@gmail.com'
-EMAIL_HOST_PASSWORD = 'fastcampus'
-EMAIL_USE_TLS = True
+email_config = config['email']
+EMAIL_HOST = email_config['EMAIL_HOST']
+EMAIL_PORT = email_config['EMAIL_PORT']
+EMAIL_HOST_USER = email_config['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = email_config['EMAIL_HOST_PASSWORD']
+EMAIL_USE_TLS = email_config['EMAIL_USE_TLS']
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 # FACEBOOK_LOGIN
-FACEBOOK_APP_ID = '1648598155438830'
-FACEBOOK_SECRET_CODE = 'c5f4d0062bffb00ccc632c9ecdf2dfcc'
-
+FACEBOOK_APP_ID = config['facebook']['FACEBOOK_APP_ID']
+FACEBOOK_SECRET_CODE = config['facebook']['FACEBOOK_SECRET_CODE']
 
 
 # Quick-start development settings - unsuitable for production
@@ -56,7 +58,7 @@ FACEBOOK_SECRET_CODE = 'c5f4d0062bffb00ccc632c9ecdf2dfcc'
 SECRET_KEY = '(_zd(@huv*m3cd9%ml@=dphe^uc=^$(!mx)itau(%w%hjjac=t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
 
 ALLOWED_HOSTS = []
 
@@ -64,9 +66,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'video',
-    'blog',
-    'member',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -74,6 +73,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+
+    'video',
+    'blog',
+    'member',
 ]
 
 MIDDLEWARE = [
@@ -106,7 +109,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mysite.wsgi.application'
+
 
 
 # Database
@@ -139,21 +142,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/1.10/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
+# ETC
+WSGI_APPLICATION = 'mysite.wsgi.application'
+LANGUAGE_CODE = 'ko-kr'
+TIME_ZONE = 'Asia/Seoul'
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
-
-STATIC_URL = '/static/'
