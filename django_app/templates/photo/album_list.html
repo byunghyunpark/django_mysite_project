@@ -3,6 +3,7 @@
 {% block content %}
 
 <div class="container">
+<a href="{% url 'photo:album_add' %}" class="btn btn-primary">Add album</a>
 <h4>Album list</h4>
     <ul>
         {% for album in albums %}
