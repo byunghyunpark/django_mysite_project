@@ -6,26 +6,28 @@
 <a href="{% url 'photo:upload' pk=pk %}" type="button" class="btn btn-default">사진추가</a>
 
 <div class="container">
-    <ul>
-        {% for photo in photos %}
+  <ul>
+    {% for photo in photos %}
+      <div class="row photo-album-list">
         <li>
+          <div class="col-sm-3 photo-image">
+              <img src="{{ photo.img.url }}" alt="">
+          </div>
+          <div class="col-sm-8 col-sm-offset-1 photo-content">
             <h3>{{ photo.title }}</h3>
-            <img src="{{ photo.img.url }}" alt="">
             <p>description : {{ photo.description }}</p>
-
             <form action="{% url 'photo:photo_like' pk=photo.pk %}" method="post">{% csrf_token %}
                 <button class="btn btn-default">좋아요</button>
             </form>
-
             <form action="{% url 'photo:photo_dislike' pk=photo.pk %}" method="post">{% csrf_token %}
                 <button class="btn btn-default">싫어요</button>
             </form>
-
             <p>like_users = {{ photo.like_users.count }}</p>
             <p>dislike_users = {{ photo.dislike_users.count }}</p>
-
+          </div>
         </li>
-        {% endfor %}
-    </ul>
+      </div>
+    {% endfor %}
+  </ul>
 </div>
 {% endblock %}
