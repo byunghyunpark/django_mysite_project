@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 
 from .forms import AlbumAdd
@@ -27,3 +27,8 @@ def album_add(request):
     else:
         form = AlbumAdd()
         return render(request, 'photo/album_add.html', {'form': form})
+
+
+def album_detail(request, pk):
+    return render(request, 'photo/album_detail.html', {})
+

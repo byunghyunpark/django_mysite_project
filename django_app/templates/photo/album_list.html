@@ -8,7 +8,7 @@
     <ul>
         {% for album in albums %}
         <li>
-            <a href="#">{{ album.title }}</a>
+            <a href="{% url 'photo:album_detail' pk=album.pk %}">{{ album.title }}</a>
         </li>
         {% endfor %}
     </ul>
