@@ -2,6 +2,18 @@
 
 {% block content %}
 
-<p>Hello world</p>
+<h1>"{{ album }}" 앨범 사진목록</h1>
+<a href="{% url 'photo:upload' pk=pk %}" type="button" class="btn btn-default">사진추가</a>
 
+<div class="container">
+    <ul>
+        {% for photo in photos %}
+        <li>
+            <h3>{{ photo.title }}</h3>
+            <img src="{{ photo.img.url }}" alt="">
+            <p>description : {{ photo.description }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
