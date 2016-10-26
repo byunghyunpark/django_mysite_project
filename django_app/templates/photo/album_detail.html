@@ -12,6 +12,18 @@
             <h3>{{ photo.title }}</h3>
             <img src="{{ photo.img.url }}" alt="">
             <p>description : {{ photo.description }}</p>
+
+            <form action="{% url 'photo:photo_like' pk=photo.pk %}" method="post">{% csrf_token %}
+                <button class="btn btn-default">좋아요</button>
+            </form>
+
+            <form action="{% url 'photo:photo_dislike' pk=photo.pk %}" method="post">{% csrf_token %}
+                <button class="btn btn-default">싫어요</button>
+            </form>
+
+            <p>like_users = {{ photo.like_users.count }}</p>
+            <p>dislike_users = {{ photo.dislike_users.count }}</p>
+
         </li>
         {% endfor %}
     </ul>

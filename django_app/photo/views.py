@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 
 from .forms import AlbumAdd, UploadFileForm
-from photo.models import Album, Photo
+from photo.models import Album, Photo, PhotoLike, PhotoDislike
 
 
 def album_list(request):
@@ -65,3 +65,32 @@ def upload_file(request, pk):
     else:
         form = UploadFileForm()
     return render(request, 'photo/upload.html', {'form': form})
+
+
+def photo_like(request, pk):
+    next = request.GET.get('next')
+    if request.method == 'POST':
+        photo = Photo.objects.get(pk=pk)
+        album_pk = photo.album.pk
+        user = request.user
+        PhotoLike.objects.create(
+            photo=photo,
+            user=user,
+        )
+        return redirect('photo:album_detail', pk=album_pk)
+    else:
+        return redirect(next)
+
+def photo_dislike(request, pk):
+    next = request.GET.get('next')
+    if request.method == 'POST':
+        photo = Photo.objects.get(pk=pk)
+        album_pk = photo.album.pk
+        user = request.user
+        PhotoDislike.objects.create(
+            photo=photo,
+            user=user,
+        )
+        return redirect('photo:album_detail', pk=album_pk)
+    else:
+        return redirect(next)
