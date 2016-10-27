@@ -73,10 +73,13 @@ def photo_like(request, pk):
         photo = Photo.objects.get(pk=pk)
         album_pk = photo.album.pk
         user = request.user
-        PhotoLike.objects.create(
-            photo=photo,
-            user=user,
-        )
+        if PhotoLike.objects.filter(user=user, photo=photo).exists():
+            pass
+        else:
+            PhotoLike.objects.create(
+                photo=photo,
+                user=user,
+            )
         return redirect('photo:album_detail', pk=album_pk)
     else:
         return redirect(next)
@@ -87,10 +90,13 @@ def photo_dislike(request, pk):
         photo = Photo.objects.get(pk=pk)
         album_pk = photo.album.pk
         user = request.user
-        PhotoDislike.objects.create(
-            photo=photo,
-            user=user,
-        )
+        if PhotoDislike.objects.filter(user=user, photo=photo).exists():
+            pass
+        else:
+            PhotoDislike.objects.create(
+                photo=photo,
+                user=user,
+            )
         return redirect('photo:album_detail', pk=album_pk)
     else:
         return redirect(next)
