@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404
 
 from photo.forms import UploadFileForm
@@ -7,7 +8,6 @@ from photo.models import Album, Photo, PhotoLike, PhotoDislike
 __all__ = [
     'upload_file',
     'photo_like',
-    'photo_dislike',
 ]
 
 
@@ -34,37 +34,37 @@ def upload_file(request, album_pk):
     return render(request, 'photo/upload.html', {'form': form})
 
 
-def photo_like(request, pk):
-    next = request.GET.get('next')
-    if request.method == 'POST':
-        photo = Photo.objects.get(pk=pk)
-        album_pk = photo.album.pk
-        user = request.user
-        if PhotoLike.objects.filter(user=user, photo=photo).exists():
-            PhotoLike.objects.get(user=user, photo=photo).delete()
-        else:
-            PhotoLike.objects.create(
-                photo=photo,
-                user=user,
-            )
-        return redirect('photo:album_detail', pk=album_pk)
+@login_required
+@require_POST
+def photo_like(request, pk, like_type='like'):
+
+    photo = get_object_or_404(Photo, pk=pk)
+    album = photo.album
+    user = request.user
+    like_model = PhotoLike if like_type == 'like' else PhotoDislike
+    opposite_model = PhotoDislike if like_type == 'like' else PhotoLike
+
+    user_like_exist = like_model.objects.filter(
+        user=user,
+        photo=photo,
+    )
+    # 좋아요가 이미 존재하는경우 좋아요 삭제
+    if user_like_exist.exists():
+        user_like_exist.delete()
+    # 좋아요 생성
     else:
-        return redirect(next)
+        like_model.objects.create(
+            user=user,
+            photo=photo,
+        )
+        # 만약 싫어요 클릭되있는 경우 싫어요 삭제
+        opposite_model.objects.filter(
+            user=user,
+            photo=photo,
+        ).delete()
+
+    return redirect('photo:album_detail', pk=album.pk)
 
 
-def photo_dislike(request, pk):
-    next = request.GET.get('next')
-    if request.method == 'POST':
-        photo = Photo.objects.get(pk=pk)
-        album_pk = photo.album.pk
-        user = request.user
-        if PhotoDislike.objects.filter(user=user, photo=photo).exists():
-            PhotoDislike.objects.get(user=user, photo=photo).delete()
-        else:
-            PhotoDislike.objects.create(
-                photo=photo,
-                user=user,
-            )
-        return redirect('photo:album_detail', pk=album_pk)
-    else:
-        return redirect(next)
+
+
