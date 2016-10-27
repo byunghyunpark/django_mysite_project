@@ -74,7 +74,7 @@ def photo_like(request, pk):
         album_pk = photo.album.pk
         user = request.user
         if PhotoLike.objects.filter(user=user, photo=photo).exists():
-            pass
+            PhotoLike.objects.get(user=user, photo=photo).delete()
         else:
             PhotoLike.objects.create(
                 photo=photo,
@@ -91,7 +91,7 @@ def photo_dislike(request, pk):
         album_pk = photo.album.pk
         user = request.user
         if PhotoDislike.objects.filter(user=user, photo=photo).exists():
-            pass
+            PhotoDislike.objects.get(user=user, photo=photo).delete()
         else:
             PhotoDislike.objects.create(
                 photo=photo,
