@@ -18,6 +18,7 @@ class Photo(BaseModel):
     title = models.CharField(max_length=30)
     description = models.CharField(max_length=100, blank=True)
     img = models.ImageField(upload_to='photo')
+    img_thumbnail = models.ImageField(upload_to='photo/thumbnail', blank=True)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, through='PhotoLike', related_name='photo_set_like_users')
     dislike_users = models.ManyToManyField(settings.AUTH_USER_MODEL, through='PhotoDislike', related_name='photo_set_dislike_users')
 
