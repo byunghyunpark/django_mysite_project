@@ -3,7 +3,7 @@
 {% block content %}
 
 <h1>"{{ album.title }}" 앨범 사진목록</h1>
-<a href="{% url 'photo:upload' pk=album.pk %}" type="button" class="btn btn-default">사진추가</a>
+<a href="{% url 'photo:upload' album_pk=album.pk %}" type="button" class="btn btn-default">사진추가</a>
 
 <div class="container">
   <ul>
