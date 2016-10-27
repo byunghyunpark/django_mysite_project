@@ -1,7 +1,10 @@
 from django.conf import settings
 from django.db import models
 
-class Album(models.Model):
+from mysite.utils.models import BaseModel
+
+
+class Album(BaseModel):
     title = models.CharField(max_length=30)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
     description = models.CharField(max_length=100, blank=True)
@@ -9,7 +12,7 @@ class Album(models.Model):
     def __str__(self):
         return self.title
 
-class Photo(models.Model):
+class Photo(BaseModel):
     album = models.ForeignKey(Album)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=30)
@@ -22,13 +25,11 @@ class Photo(models.Model):
         return self.title
 
 
-class PhotoLike(models.Model):
+class PhotoLike(BaseModel):
     photo = models.ForeignKey(Photo)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    created_date = models.DateTimeField(auto_now_add=True)
 
 
-class PhotoDislike(models.Model):
+class PhotoDislike(BaseModel):
     photo = models.ForeignKey(Photo)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    created_date = models.DateTimeField(auto_now_add=True)
