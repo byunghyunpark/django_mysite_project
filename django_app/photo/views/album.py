@@ -31,7 +31,8 @@ def album_add(request):
             return redirect('photo:album_list')
     else:
         form = AlbumAdd()
-        return render(request, 'photo/album_add.html', {'form': form})
+
+    return render(request, 'photo/album_add.html', {'form': form})
 
 
 def album_detail(request, pk):
