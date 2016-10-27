@@ -2,12 +2,12 @@
 
 {% block content %}
 
-<h1>"{{ album }}" 앨범 사진목록</h1>
-<a href="{% url 'photo:upload' pk=pk %}" type="button" class="btn btn-default">사진추가</a>
+<h1>"{{ album.title }}" 앨범 사진목록</h1>
+<a href="{% url 'photo:upload' pk=album.pk %}" type="button" class="btn btn-default">사진추가</a>
 
 <div class="container">
   <ul>
-    {% for photo in photos %}
+    {% for photo in album.photo_set.all %}
       <div class="row photo-album-list">
         <li>
           <div class="col-sm-3 photo-image">

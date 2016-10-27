@@ -36,11 +36,8 @@ def album_add(request):
 
 
 def album_detail(request, pk):
-    photos = Photo.objects.filter(album=pk)
     album = Album.objects.get(pk=pk)
     context = {
-        'photos': photos,
-        'pk': pk,
         'album': album,
     }
     return render(request, 'photo/album_detail.html', context)
