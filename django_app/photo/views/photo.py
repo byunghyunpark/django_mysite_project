@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from photo.forms import UploadFileForm
 from photo.models import Album, Photo, PhotoLike, PhotoDislike
@@ -12,11 +12,11 @@ __all__ = [
 
 
 @login_required
-def upload_file(request, pk):
+def upload_file(request, album_pk):
+    album = get_object_or_404(Album, pk=album_pk)
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            album = Album.objects.get(pk=pk)
             title = form.cleaned_data['title']
             owner = request.user
             description = form.cleaned_data['description']
@@ -28,7 +28,7 @@ def upload_file(request, pk):
                 description=description,
                 img=file,
             )
-            return redirect('photo:album_detail', pk=pk)
+            return redirect('photo:album_detail', pk=album_pk)
     else:
         form = UploadFileForm()
     return render(request, 'photo/upload.html', {'form': form})
