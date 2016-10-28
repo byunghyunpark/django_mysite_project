@@ -4,8 +4,8 @@ h3 { font-size: 30px; margin-bottom: 20px; color: #666; }
 
 div .bookmark-content { border-bottom: 1px solid gray; margin-bottom: 30px; }
 
-li { list-style: none; }
+.content-container { position: relative; }
 
-.photo-album-list { border-bottom: 1px solid lightgray; margin: 20px 0 20px 0; padding: 0 0 20px 0; }
+.btn-top-right { position: absolute; right: 0; top: -10px; }
 
 /*# sourceMappingURL=common.compact.css.map */

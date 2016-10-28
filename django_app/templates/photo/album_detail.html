@@ -1,33 +1,58 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
+<div id="album-detail">
+  <h1>"{{ album.title }}" Album</h1>
+  <div>
+    <span>owner: {{ album.owner.email }}</span>
+    {% if album.description %}
+    <span>| description: {{ album.description }}</span>
+    {% endif %}
+  </div>
+  <a href="{% url 'photo:upload' album_pk=album.pk %}" class="btn btn-primary btn-sm btn-top-right">
+    <span class="glyphicon glyphicon-plus"></span>
+    Add Photo
+  </a>
 
-<h1>"{{ album.title }}" 앨범 사진목록</h1>
-<a href="{% url 'photo:upload' album_pk=album.pk %}" type="button" class="btn btn-default">사진추가</a>
-
-<div class="container">
-  <ul>
+  <div class="photo-list">
     {% for photo in album.photo_set.all %}
-      <div class="row photo-album-list">
-        <li>
-          <div class="col-sm-3 photo-image">
-              <img src="{{ photo.img.url }}" alt="">
+    <div class="col-xs-6 col-md-3">
+      <div class="thumbnail">
+        <img src="{{ photo.img_thumbnail.url }}" alt="">
+        <div class="caption">
+          <div>
+            {{ photo.title }}
           </div>
-          <div class="col-sm-8 col-sm-offset-1 photo-content">
-            <h3>{{ photo.title }}</h3>
-            <p>description : {{ photo.description }}</p>
-            <form action="{% url 'photo:photo_like' pk=photo.pk like_type='like' %}" method="post">{% csrf_token %}
-                <button class="btn btn-default">좋아요</button>
-            </form>
-            <form action="{% url 'photo:photo_like' pk=photo.pk like_type='dislike' %}" method="post">{% csrf_token %}
-                <button class="btn btn-default">싫어요</button>
-            </form>
-            <p>like_users = {{ photo.like_users.count }}</p>
-            <p>dislike_users = {{ photo.dislike_users.count }}</p>
+          <div>
+            <span>owner: {{ photo.owner.email }}</span>
           </div>
-        </li>
+          <div class="like-container">
+            <form action="{% url 'photo:photo_like' pk=photo.pk like_type='like' %}" method="post" class="like-form">{% csrf_token %}
+                <button class="btn label
+                    {% if user in photo.like_users.all %}label-info
+                    {% else %}label-default
+                    {% endif %}"
+                    type="submit">
+                  <span class="glyphicon glyphicon-thumbs-up"></span>
+                  <span>{{ photo.like_user.count }}</span>
+                </button>
+            </form>
+            <form action="{% url 'photo:photo_like' pk=photo.pk like_type='dislike' %}" method="post" class="like-form">{% csrf_token %}
+                <button class="btn label
+                    {% if user in photo.dislike_users.all %}label-danger
+                    {% else %}label-default
+                    {% endif %}"
+                    type="submit">
+                  <span class="glyphicon glyphicon-thumbs-down"></span>
+                  <span>{{ photo.dislike_user.count }}</span>
+                </button>
+            </form>
+          </div>
+        </div>
       </div>
+    </div>
     {% endfor %}
-  </ul>
+  </div>
 </div>
+
 {% endblock %}
