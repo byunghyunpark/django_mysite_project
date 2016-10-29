@@ -38,7 +38,7 @@ def album_add(request):
 
 def album_detail(request, pk):
     album = Album.objects.get(pk=pk)
-    photo_list = album.photo_set.all()
+    photo_list = album.photo_set.all().order_by('-created_date')
     paginator = Paginator(photo_list, 8)
 
     page = request.GET.get('page')
