@@ -34,7 +34,7 @@
                     {% endif %}"
                     type="submit">
                   <span class="glyphicon glyphicon-thumbs-up"></span>
-                  <span>{{ photo.like_user.count }}</span>
+                  <span>{{ photo.like_users.count }}</span>
                 </button>
             </form>
             <form action="{% url 'photo:photo_like' pk=photo.pk like_type='dislike' %}" method="post" class="like-form">{% csrf_token %}
@@ -44,7 +44,7 @@
                     {% endif %}"
                     type="submit">
                   <span class="glyphicon glyphicon-thumbs-down"></span>
-                  <span>{{ photo.dislike_user.count }}</span>
+                  <span>{{ photo.dislike_users.count }}</span>
                 </button>
             </form>
           </div>
