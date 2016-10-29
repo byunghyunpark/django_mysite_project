@@ -40,4 +40,4 @@ def album_detail(request, pk):
     context = {
         'album': album,
     }
-    return render(request, 'photo/album_detail.html', context)
+    return render(request, 'photo/ajax_album_detail.html', context)

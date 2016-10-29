@@ -1,0 +1,46 @@
+{% extends 'common/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div id="album-detail">
+  <h1>"{{ album.title }}" Album</h1>
+  <div>
+    <span>owner: {{ album.owner.email }}</span>
+    {% if album.description %}
+    <span>| description: {{ album.description }}</span>
+    {% endif %}
+  </div>
+  <a href="{% url 'photo:upload' album_pk=album.pk %}" class="btn btn-primary btn-sm btn-top-right">
+    <span class="glyphicon glyphicon-plus"></span>
+    Add Photo
+  </a>
+
+  <div class="photo-list">
+    {% for photo in album.photo_set.all %}
+    <div class="col-xs-6 col-md-3">
+      <div class="thumbnail">
+        <img src="{{ photo.img_thumbnail.url }}" alt="">
+        <div class="caption">
+          <div>
+            {{ photo.title }}
+          </div>
+          <div>
+            <span>owner: {{ photo.owner.email }}</span>
+          </div>
+          <div class="like-container">
+            <button id="'btn-photo-{{ photo.pk }}-like" onclick="photoLike({{ photo.pk }}, 'like')" class="btn label label-default">
+                <span class="glyphicon glyphicon-thumbs-up"></span>
+                <span id="photo-{{ photo.pk }}-like-count" photo-pk="{{ photo.pk }}">{{ photo.like_users.count }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'js/photo/album_detail.js' %}"></script>
+{% endblock %}}
