@@ -26,11 +26,25 @@ class Photo(BaseModel):
     def __str__(self):
         return self.title
 
+    # photo save override
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
+        image_changed = False
 
+        # 기존 이미지가 있는 경우
+        if self.pk:
+            original_photo = Photo.objects.get(pk=self.pk)
+            if original_photo.img != self.img:
+                image_changed = True
+
+        # 기존 이미지가 없는 경우 신규등록
         if self.img and not self.img_thumbnail:
+            image_changed = True
+
+        # 조건이 충분한 경우 원본 이미지와 썸네일 저장
+        super().save(*args, **kwargs)
+        if image_changed:
             self.make_thumbnail()
+
 
     def make_thumbnail(self):
         import os
