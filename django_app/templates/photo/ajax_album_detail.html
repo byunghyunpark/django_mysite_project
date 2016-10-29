@@ -28,7 +28,10 @@
             <span>owner: {{ photo.owner.email }}</span>
           </div>
           <div class="like-container">
-            <button id="btn-photo-{{ photo.pk }}-like" onclick="photoLike({{ photo.pk }}, 'like')" class="btn label label-default">
+            <button id="btn-photo-{{ photo.pk }}-like" onclick="photoLike({{ photo.pk }}, 'like')" class="btn label
+                    {% if user in photo.like_users.all %}label-info
+                    {% else %}label-default
+                    {% endif %}">
                 <span class="glyphicon glyphicon-thumbs-up"></span>
                 <span id="photo-{{ photo.pk }}-like-count" photo-pk="{{ photo.pk }}">{{ photo.like_users.count }}</span>
             </button>
