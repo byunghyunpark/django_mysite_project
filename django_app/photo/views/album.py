@@ -39,7 +39,7 @@ def album_add(request):
 def album_detail(request, pk):
     album = Album.objects.get(pk=pk)
     photo_list = album.photo_set.all()
-    paginator = Paginator(photo_list, 4)
+    paginator = Paginator(photo_list, 8)
 
     page = request.GET.get('page')
     try:
