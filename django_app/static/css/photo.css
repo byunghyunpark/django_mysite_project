@@ -1,5 +1,6 @@
 #album-detail .photo-list {
   margin-top: 20px;
+  overflow: hidden;
 }
 
 #album-detail .like-container form.like-form {

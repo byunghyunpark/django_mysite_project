@@ -16,7 +16,7 @@
   </a>
 
   <div class="photo-list">
-    {% for photo in album.photo_set.all %}
+    {% for photo in photos %}
     <div class="col-xs-6 col-md-3">
       <div class="thumbnail">
         <img src="{{ photo.img_thumbnail.url }}" alt="">
@@ -38,6 +38,23 @@
     </div>
     {% endfor %}
   </div>
+  <nav>
+    <ul class="pager">
+      {% if photos.has_previous %}
+      <li>
+        <a href="?page={{ photos.previous_page_number }}">Prev</a>
+      </li>
+      {% endif %}
+      <li>
+        <a href="#">{{ photos.number }} of {{ photos.paginator.num_pages }}</a>
+      </li>
+      {% if photos.has_next %}
+      <li>
+        <a href="?page={{ photos.next_page_number }}">Next</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
 </div>
 {% endblock %}
 

@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect
 
 from photo.forms import AlbumAdd
@@ -37,7 +38,21 @@ def album_add(request):
 
 def album_detail(request, pk):
     album = Album.objects.get(pk=pk)
+    photo_list = album.photo_set.all()
+    paginator = Paginator(photo_list, 4)
+
+    page = request.GET.get('page')
+    try:
+        photos = paginator.page(page)
+    except PageNotAnInteger:
+        photos = paginator.page(1)
+    except EmptyPage:
+        photos = paginator.page(paginator.num_pages)
+
+
     context = {
         'album': album,
+        'photos': photos,
     }
+
     return render(request, 'photo/ajax_album_detail.html', context)
