@@ -21,6 +21,22 @@ function photoLike(photoPk, likeType) {
                 btnLike.addClass('label-default');
             }
 
+
+            var dislikeCount = response.dislike_count;
+            var userDislike = response.user_dislike;
+            var spanDislikeCount = $('#photo-' + photoPk + '-dislike-count');
+            spanDislikeCount.text(dislikeCount);
+
+            var btnDislike = $('#btn-photo-' + photoPk + '-dislike');
+
+            if(userDislike) {
+                btnDislike.addClass('label-danger');
+                btnDislike.removeClass('label-default');
+            } else {
+                btnDislike.removeClass('label-danger');
+                btnDislike.addClass('label-default');
+            }
+
         })
         .fail(function (response) {
             console.log(response);

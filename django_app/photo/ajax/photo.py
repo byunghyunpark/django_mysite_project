@@ -45,10 +45,13 @@ def photo_like(request, pk, like_type='like'):
 
     ret = {
         'like_count': photo.like_users.count(),
+        'dislike_count': photo.dislike_users.count(),
         'user_like': False,
+        'user_dislike': False,
     }
     if not is_delete:
         ret['user_like'] = True if like_type == 'like' else False
+        ret['user_dislike'] = True if like_type != 'like' else False
 
     return HttpResponse(json.dumps(ret), content_type='application/json')
 

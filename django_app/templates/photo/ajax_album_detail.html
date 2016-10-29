@@ -38,6 +38,13 @@
                 <span class="glyphicon glyphicon-thumbs-up"></span>
                 <span id="photo-{{ photo.pk }}-like-count" photo-pk="{{ photo.pk }}">{{ photo.like_users.count }}</span>
             </button>
+            <button id="btn-photo-{{ photo.pk }}-dislike" onclick="photoLike({{ photo.pk }}, 'dislike')" class="btn label
+                    {% if user in photo.dislike_users.all %}label-danger
+                    {% else %}label-default
+                    {% endif %}">
+                <span class="glyphicon glyphicon-thumbs-down"></span>
+                <span id="photo-{{ photo.pk }}-dislike-count" photo-pk="{{ photo.pk }}">{{ photo.dislike_users.count }}</span>
+            </button>
           </div>
         </div>
       </div>
