@@ -19,4 +19,9 @@ div .bookmark-content {
   right: 0;
   top: -10px; }
 
+.btn-middle-right {
+  position: absolute;
+  right: 0;
+  top: 30px; }
+
 /*# sourceMappingURL=common.nested.css.map */

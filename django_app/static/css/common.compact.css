@@ -8,4 +8,6 @@ div .bookmark-content { border-bottom: 1px solid gray; margin-bottom: 30px; }
 
 .btn-top-right { position: absolute; right: 0; top: -10px; }
 
+.btn-middle-right { position: absolute; right: 0; top: 30px; }
+
 /*# sourceMappingURL=common.compact.css.map */

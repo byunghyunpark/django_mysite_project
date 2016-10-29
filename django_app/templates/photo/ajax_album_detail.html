@@ -14,7 +14,10 @@
     <span class="glyphicon glyphicon-plus"></span>
     Add Photo
   </a>
-
+  <a href="{% url 'photo:upload_multi' album_pk=album.pk %}" class="btn btn-primary btn-sm btn-middle-right">
+    <span class="glyphicon glyphicon-plus"></span>
+    Multi Add Photo
+  </a>
   <div class="photo-list">
     {% for photo in photos %}
     <div class="col-xs-6 col-md-3">

@@ -1,0 +1,26 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+
+<div class="photo-add">
+    <h1>사진 여러장 추가</h1>
+    <form enctype="multipart/form-data" method="post">{% csrf_token %}
+        <div class="form-group">
+            {{ form.title.label_tag }}
+            {{ form.title }}
+            {{ form.title.errors }}
+        </div>
+            <div class="form-group">
+            {{ form.description.label_tag }}
+            {{ form.description }}
+            {{ form.description.errors }}
+        </div>
+            <div class="form-group">
+            {{ form.file.label_tag }}
+            {{ form.file }}
+            {{ form.file.errors }}
+        </div>
+        <button type="submit" class="save btn btn-default">저장</button>
+    </form>
+</div>
+{% endblock %}
