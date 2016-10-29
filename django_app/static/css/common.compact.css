@@ -10,4 +10,6 @@ div .bookmark-content { border-bottom: 1px solid gray; margin-bottom: 30px; }
 
 .btn-middle-right { position: absolute; right: 0; top: 30px; }
 
+.album-list { font-size: 17px; font-weight: bold; color: #666; }
+
 /*# sourceMappingURL=common.compact.css.map */

@@ -30,4 +30,10 @@ div .bookmark-content {
   top: 30px;
 }
 
+.album-list {
+  font-size: 17px;
+  font-weight: bold;
+  color: #666;
+}
+
 /*# sourceMappingURL=common.css.map */

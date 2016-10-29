@@ -2,12 +2,12 @@
 
 {% block content %}
 
-<div class="container">
-<a href="{% url 'photo:album_add' %}" class="btn btn-primary">Add album</a>
+<div class="content-container">
+<a href="{% url 'photo:album_add' %}" class="btn btn-primary btn-top-right">Add album</a>
 <h1>Album list</h1>
     <ul>
         {% for album in albums %}
-        <li>
+        <li class="album-list">
             <p><a href="{% url 'photo:album_detail' pk=album.pk %}">{{ album.title }}</a></p>
         </li>
         {% endfor %}
