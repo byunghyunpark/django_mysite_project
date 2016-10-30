@@ -27,15 +27,28 @@ class MyUserAdmin(UserAdmin):
             'fields': (
                 'email',
                 'password',
+                'nickname',
+            )
+        }),
+        ('Personal Info', {
+            'fields': (
                 'last_name',
                 'first_name',
-                'nickname',
-                'date_joined',
-                'is_staff',
                 'phone_number',
+            )
+        }),
+        ('Facebook Info', {
+            'fields': (
                 'is_facebook_user',
                 'facebook_id',
                 'img_profile_url',
+            )
+        }),
+        ('Additional Info', {
+            'fields': (
+                'date_joined',
+                'is_staff',
+                'is_superuser',
             )
         }),
     )
