@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AdminPasswordChangeForm
 
 from .models import MyUser
 
@@ -53,9 +53,34 @@ class MyUserAdmin(UserAdmin):
         }),
     )
 
+    add_fieldsets = (
+        (None, {
+            'fields': (
+                'email',
+                'password1',
+                'password2',
+                'nickname',
+            )
+        }),
+        ('Personal Info', {
+            'fields': (
+                'last_name',
+                'first_name',
+                'phone_number',
+            )
+        }),
+        ('Additional Info', {
+            'fields': (
+                'date_joined',
+                'is_staff',
+                'is_superuser',
+            )
+        }),
+    )
 
     form = MyUserChangeForm
     add_form = MyUserCreationForm
+    change_password_form = AdminPasswordChangeForm
 
 
 admin.site.register(MyUser, MyUserAdmin)
