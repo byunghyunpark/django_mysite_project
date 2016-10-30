@@ -81,6 +81,12 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 
     objects = MyUserManager()
 
+
+    @property
+    def full_name(self):
+        return self.get_full_name()
+
+
     def get_full_name(self):
         return '%s%s' % (self.last_name, self.first_name)
 
