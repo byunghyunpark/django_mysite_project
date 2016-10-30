@@ -46,10 +46,8 @@ class Photo(BaseModel):
             self.make_thumbnail()
 
     def url_thumbnail(self):
-        if self.img_thumbnail:
-            return self.img_thumbnail.url
-        else:
-            return '/static/img/default.jpg'
+        return self.url_field('img_thumbnail', default='/static/img/default.jpg')
+
 
     def make_thumbnail(self):
         import os

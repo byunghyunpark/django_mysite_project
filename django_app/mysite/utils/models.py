@@ -8,3 +8,12 @@ class BaseModel(models.Model):
     # 가상화해준다
     class Meta:
         abstract = True
+
+    def url_field(self, fieldname, default=''):
+        # fieldname 이라는 속성을 찾아서 출력한다
+        field = getattr(self, fieldname)
+
+        if field and hasattr(field, 'url'):
+            return field.url
+        return default
+
