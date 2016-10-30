@@ -8,9 +8,3 @@ class BaseModel(models.Model):
     # 가상화해준다
     class Meta:
         abstract = True
-
-    def url_field(self, fieldname, default=''):
-        field = getattr(self, fieldname)
-        if field and hasattr(field, 'url'):
-            return field.url
-        return default
