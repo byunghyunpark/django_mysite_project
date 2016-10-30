@@ -45,6 +45,11 @@ class Photo(BaseModel):
         if image_changed:
             self.make_thumbnail()
 
+    def url_thumbnail(self):
+        if self.img_thumbnail:
+            return self.img_thumbnail.url
+        else:
+            return '/static/img/default.jpg'
 
     def make_thumbnail(self):
         import os
