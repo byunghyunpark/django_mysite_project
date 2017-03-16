@@ -1,6 +1,7 @@
 *.sqlite3
 .idea/
 media/
+.conf/
 
 # Config folders
 django_app/.conf
