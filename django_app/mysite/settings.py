@@ -23,9 +23,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 CONF_DIR = os.path.join(BASE_DIR, '.conf')
 
 # json설정파일의 내용 불러오기
-config_file = open(os.path.join(CONF_DIR, 'settings_debug.json'))
-config = json.loads(config_file.read())
-config_file.close()
+config = json.loads(open(os.path.join(CONF_DIR, 'settings_debug.json')).read())
 
 # Static files
 STATIC_URL = '/static/'
